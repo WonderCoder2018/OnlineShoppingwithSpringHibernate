@@ -8,34 +8,28 @@ html {
 }
 
 nav {
-	height: 90px;
+	bottom:25px;
+	height:100%;
 }
 
+
 body {
-	padding-top: 900px;
+	padding-top: 50px;
 	height: 100%;
 }
 
-@media ( min-width : 992px) {
-	body {
-		padding-top: 90px;
-		height: 100%;
-	}
-}
 
 hr
 {
-border:solid 0.5px black;
+border:solid .5px black;
 width: 100%;
-background-color:#b048d2;
-height:100%;
 
 }
 
 footer {
 	margin: 0;
 	position: absolute;
-	bottom: 15px;
+	bottom: 0px;
 	height: 60px;
 	width: 100%;
 }
@@ -50,4 +44,14 @@ footer {
 
 .content {
 	padding-bottom: 60px;
+}
+
+.dataTableImg{
+	width:80px;
+	height:80px;
+}
+
+.imagesize{
+	width:250px;
+	height:300px;
 }
