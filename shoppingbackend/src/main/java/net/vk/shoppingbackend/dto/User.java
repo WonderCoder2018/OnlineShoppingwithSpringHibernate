@@ -1,33 +1,59 @@
 package net.vk.shoppingbackend.dto;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "user_detail")
-public class User {
+public class User implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = "first_name")
-	private String firstname;
+	@NotBlank(message = "Please enter first name")
+	private String firstName;
 	@Column(name = "last_name")
-	private String lastname;
+	@NotBlank(message = "Please enter last name")
+	private String lastName;
+	@NotBlank(message = "Please enter password")
 	private String password;
 	@Column(name = "contact_number")
+	@NotBlank(message = "Please enter contact number")
 	private String contactNumber;
+	@NotBlank(message = "Please enter email address")
 	private String email;
 	private String role;
 	private boolean enabled = true;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	// confirm password transient field
+	@Transient
+	private String confirmPassword;
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Cart cart;
 
 	public Cart getCart() {
@@ -46,20 +72,20 @@ public class User {
 		this.id = id;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getPassword() {
@@ -104,7 +130,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", password=" + password
+		return "User [id=" + id + ", firstname=" + firstName + ", lastname=" + lastName + ", password=" + password
 				+ ", contactNumber=" + contactNumber + ", email=" + email + ", role=" + role + ", enabled=" + enabled
 				+ "]";
 	}
