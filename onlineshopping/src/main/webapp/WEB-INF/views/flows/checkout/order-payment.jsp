@@ -103,6 +103,20 @@ required autofocus/>
 
 </div>
 
+<div class="col-xs-5 col-md-5 pull-right">
+
+<div class="form-group row">
+
+<label for="cvvCode">CVV CODE</label>
+
+<inputy type="password" class="form-control" id="cvvCode" placeholder="CVV" required />
+
+
+
+</div>
+
+
+</div>
 
 </div>
 
