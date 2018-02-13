@@ -13,6 +13,9 @@ $(function() {
 	case 'Manage Products':
 		$('#manageProducts').addClass('active');
 		break;
+	case 'User Cart':
+		$('#userCart').addClass('active');
+		break;
 	default:
 		if (menu == "Home")
 			break;
@@ -97,26 +100,30 @@ $(function() {
 											+ '/show/'
 											+ data
 											+ '/product" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>&#160;';
-									if (row.quantity < 1) {
-										str += '<a href="javascript:void(0)" class="btn btn-success btn-sm disabled"><span class="glyphicon glyphicon-shopping-cart"></span></a>';
-									} else {
-										if (userRole == 'ADMIN') {
-											str += '<a href="'
-													+ window.contextRoot
-													+ '/manage/'
-													+ data
-													+ '/product" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>';
+									if (userRole == 'ADMIN') {
 
+										str += '<a href="'
+												+ window.contextRoot
+												+ '/manage/'
+												+ data
+												+ '/product" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>';
+										return str;
+									} else {
+										if (row.quantity < 1) {
+											str += '<a href="javascript:void(0)" class="btn btn-success btn-sm disabled"><span class="glyphicon glyphicon-shopping-cart"></span></a>';
+											return str;
 										} else {
 											str += '<a href="'
 													+ window.contextRoot
 													+ '/cart/add/'
 													+ data
 													+ '/product" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-shopping-cart"></span></a>';
+											return str;
+
 										}
 
 									}
-									return str;
+
 								}
 							} ]
 				});
@@ -374,5 +381,54 @@ $(function() {
 
 		});
 	}
+
+	// Handling the click of refresh cart button event
+
+	$('button[name="refreshCart"]')
+			.click(
+					function() {
+
+						// fetch the cartline id
+
+						var cartLineId = $(this).attr('value');
+						var countElement = $('#count_' + cartLineId);
+
+						var originalCount = countElement.attr('value');
+						var currentCount = countElement.val();
+
+						// work only when the count has changed
+
+						if (currentCount != originalCount) {
+
+							console.log("current count: " + currentCount);
+							console.log("original count: " + originalCount);
+
+							if (currentCount < 1 || currentCount > 5) {
+
+								// reverting back to the originalCount
+								// user has given value below 1 or above 5
+								countElement.val(originalCount);
+								bootbox
+										.alert({
+
+											size : 'medium',
+											title : 'Error',
+											message : 'Product count should be minimum 1 and maximum 5'
+
+										});
+							} else {
+								var updateUrl = contextRoot + '/cart/'
+										+ cartLineId + '/update?count='
+										+ currentCount;
+
+								// forward this to the controller
+
+								window.location.href = updateUrl;
+
+							}
+
+						}
+
+					});
 
 });

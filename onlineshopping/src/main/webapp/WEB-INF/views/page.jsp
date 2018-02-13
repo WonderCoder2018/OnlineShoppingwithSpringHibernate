@@ -27,7 +27,8 @@
 <script>
 	window.menu = '${title}';
 	window.contextRoot = '${contextRoot}';
-</script>
+	window.userRole = '${userModel.role}';
+	</script>
 
 <!-- Bootstrap core CSS -->
 <link href="${css}/bootstrap.min.css" rel="stylesheet">
@@ -92,6 +93,11 @@
 			<!-- Load only when user click manage products -->
 			<c:if test="${userClickManageProducts == true}">
 				<%@include file="manageProducts.jsp"%>
+			</c:if>
+			
+				<!-- Load only when user click cart show -->
+			<c:if test="${userClickShowCart == true}">
+				<%@include file="cart.jsp"%>
 			</c:if>
 
 		</div>

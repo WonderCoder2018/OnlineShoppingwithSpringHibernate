@@ -48,13 +48,13 @@ public class GlobalController {
 				if (userModel.getRole().equals("USER")) {
 					// set the cart only if user is a buyer
 					userModel.setCart(user.getCart());
-
-					// set the userModel in the session
-
-					session.setAttribute("userModel", userModel);
-
-					return userModel;
 				}
+
+				// set the userModel in the session
+
+				session.setAttribute("userModel", userModel);
+
+				return userModel;
 			}
 		}
 
